@@ -22,7 +22,7 @@
      */
     (function(){
         Polymer('juicy-diamond-graph', {
-            edges: [],
+            edges: null,
             serverStatePoint: null,
             clientStatePoint: null,
 
@@ -30,6 +30,7 @@
             // Fires when an instance of the element is created
             created: function() {
                 this.serverStatePoint = this.clientStatePoint = new DiamondPoint(0, 0);
+                this.edges = [];
                 return;
             },
 
@@ -106,6 +107,7 @@
             },
 
             goRightClient: function(data) {
+              // console.log("goRightClient", this);
               var edge;
               edge = this.clientStatePoint.goRight(data || {});
               this.clientStatePoint = edge.endPoint;
@@ -113,6 +115,7 @@
             },
 
             goRightServer: function(data) {
+              // console.log("goRightServer", this);
               var edge;
               edge = this.serverStatePoint.goRight(Polymer.extend(data || {}, {
                 dashed: true
@@ -144,6 +147,7 @@
             },
 
             goLeft: function(data) {
+              // console.log("goLeft", this);
               var clientEdge, edge, serverEdge;
               data || (data = {});
               if (this.clientStatePoint.equals(this.serverStatePoint)) {
@@ -160,49 +164,11 @@
                 this.clientStatePoint = clientEdge.endPoint;
                 return this.addEdge(clientEdge);
               }
-            },
-
-            setState: function(state) {
-              var oldState, transition, _i, _len, _results;
-              oldState = this.state;
-              this.state = state;
-              _results = [];
-              for (_i = 0, _len = stateTransitions.length; _i < _len; _i++) {
-                transition = stateTransitions[_i];
-                if (oldState instanceof transition[0] && state instanceof transition[1]) {
-                  transition[2].call(this);
-                  break;
-                } else {
-                  _results.push(void 0);
-                }
-              }
-              return _results;
-            },
-
-            // applyClient: function(operation) {
-            //   this.state.beforeApplyClient(this);
-            //   MyClient.__super__.applyClient.call(this, operation);
-            //   return this.drawAwaitingAndBufferEdges();
-            // },
-
-            // applyServer: function(operation) {
-            //   this.state.beforeApplyServer(this);
-            //   MyClient.__super__.applyServer.call(this, operation);
-            //   return this.drawAwaitingAndBufferEdges();
-            // },
-
-            // serverAck: function() {
-            //   this.state.beforeServerAck(this);
-            //   MyClient.__super__.serverAck.call(this);
-            //   return this.drawAwaitingAndBufferEdges();
-            // },
-
-            drawAwaitingAndBufferEdges: function() {
-              return this.state.drawAwaitingAndBufferEdges(this);
             }
 
         });
 
+        //---- DiamondPoint ----
         var LEFT = 'left';
 
         var RIGHT = 'right';
@@ -238,6 +204,7 @@
 
         })();
 
+        //---- DiamondEdge ----
         var DiamondEdge = (function() {
 
         function DiamondEdge(startPoint, direction, data) {
