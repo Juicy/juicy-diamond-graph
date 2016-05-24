@@ -40,7 +40,7 @@ Or [download as ZIP](https://github.com/Juicy/juicy-diamond-graph/archive/master
 
 Attribute | Options         | Default | Description
 ---       | ---             | ---     | ---
-`edges`   | *array{object}* | `[]`    | Array of DiamondEdge objects. 
+`edges`   | *array{object}* | `[]`    | Array of DiamondEdge objects.
 
 
 ## Methods
@@ -69,4 +69,4 @@ For detailed changelog, check [Releases](https://github.com/Juicy/juicy-diamond-
 
 ## License
 
-[MIT License](http://opensource.org/licenses/MIT)
+MIT
